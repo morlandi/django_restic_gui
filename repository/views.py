@@ -18,6 +18,8 @@ from django.utils.formats import date_format
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from django.utils.translation import gettext_lazy as _
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 
 from repository.callstack import push, delete_to, clear, peek
 from repository.forms import RestoreForm, RepositoryForm, NewBackupForm
@@ -74,6 +76,10 @@ def LogRepoSize(repo):
 
 class RepositoryList(LoginRequiredMixin, ListView):
     model = Repository
+
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         clear()

@@ -26,7 +26,7 @@
         margin-top: -3px;
     }
     body.wip {
-        opacity: 0.5;
+        opacity: 0.5 !important;
     }
     body.wip #wip-spinner {
         display: block !important;
@@ -38,7 +38,22 @@
 {% block bootstrap4_extra_script %}
 {{ block.super }}
 <script>
-    function wip() {$('body').addClass('wip')}
+
+    $('body').removeClass('wip');
+    function wip() {$('body').addClass('wip');}
+
+    /*
+    function nowip() {console.log('nowip...'); $('body').removeClass('wip')}
+
+    $(document).ready(function() {
+        nowip();
+        console.log('ready');
+        $(window).on('popstate', function(event) {
+            nowip();
+        });
+    });
+    */
+
 </script>
 {% endblock %}
 
